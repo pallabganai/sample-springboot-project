@@ -30,6 +30,12 @@
             <artifactId>dataprovider</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.github.git-commit-id</groupId>
+            <artifactId>git-commit-id-maven-plugin</artifactId>
+            <version>${git-commit-id-maven-plugin-version}</version>
+        </dependency>
     </dependencies>
 
     <build>
