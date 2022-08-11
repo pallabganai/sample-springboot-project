@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -19,6 +20,9 @@ public class MyAppSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     DataSource dataSource;
 
+    @Autowired
+    UserDetailsService userDetailsService;
+
     @Override
     protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.inMemoryAuthentication()
@@ -28,12 +32,15 @@ public class MyAppSecurityConfig extends WebSecurityConfigurerAdapter {
 
         authenticationManagerBuilder.jdbcAuthentication()
                 .dataSource(dataSource);
+
+        authenticationManagerBuilder.userDetailsService(userDetailsService);
     }
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeRequests()
-                .antMatchers("/myapp/**").hasRole("USER")
+                .antMatchers("/myapp/myfunc").hasRole("USER")
+                .antMatchers("/myapp/myappfunc").hasRole("MYAPP_USER")
                 .antMatchers("/**").hasRole("ADMIN")
                 .and().formLogin();
     }

@@ -25,4 +25,15 @@ public class MyApplicationEndpoint {
 
         return new ResponseEntity<CatFactsResponse>(catFactsResponse, HttpStatus.OK);
     }
+
+    @GetMapping("/myappfunc")
+    public ResponseEntity<CatFactsResponse> myAppFunction() {
+        System.out.println("I am inside the myapp func");
+
+        CatFactsResponse catFactsResponse = catFacts.getFacts();
+
+        System.out.println("cat facts called");
+
+        return new ResponseEntity<CatFactsResponse>(catFactsResponse, HttpStatus.OK);
+    }
 }
